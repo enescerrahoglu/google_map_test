@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,8 @@ class MapState extends ChangeNotifier {
     try {
       var result = await dio
           .get('https://raw.githubusercontent.com/enescerrahoglu/google_map_test/refs/heads/main/lib/data.json');
-      polygonList = List<PolygonModel>.from(result.data.map((e) => PolygonModel.fromJson(e)));
+      var list = json.decode(result.data);
+      polygonList = List<PolygonModel>.from(list.map((e) => PolygonModel.fromJson(e)));
     } catch (error) {
       polygonList.clear();
       rethrow;
